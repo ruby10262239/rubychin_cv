@@ -10,7 +10,6 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
         <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
         <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
-        <script src="form.js"></script>
         <style>
             body,
             h1,
@@ -143,8 +142,13 @@
     <!-- Top menu on small screens -->
     <header class="w3-container w3-top w3-hide-large w3-white w3-xlarge w3-padding-16">
         <span class="w3-left w3-padding">RUBY CHIN'S PAGE</span>
-        <a href="javascript:void(0)" class="w3-right w3-button w3-white" onclick="w3_open()">☰</a>
+        <button type="button" class="w3-right w3-button w3-white" onclick="w3_toggle()"
+            aria-controls="mySidebar" aria-expanded="false" aria-label="Toggle navigation">☰</button>
     </header>
+
+    <button type="button" class="w3-button w3-white w3-hide-small w3-hide-medium"
+        style="position:fixed;top:8px;right:8px;z-index:4" onclick="w3_toggle()"
+        aria-controls="mySidebar" aria-expanded="true" aria-label="Toggle navigation">☰</button>
 
     <!-- Overlay effect when opening sidebar on small screens -->
     <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
@@ -159,10 +163,9 @@
     <!-- Info message -->
     <div class="info">
         <span class="closebtn">&times;</span>  
-        Hello there! This is Ruby's page. Thanks W3Schools for saving me a lot of time to build this website.
+        Hello there! This is Ruby's page. This website gives you the best experience with smartphone.
+        Feel free to click into each story block in the "MY STORY" section for more details.
     </div>
-
-
 
     <!-- About section -->
     <div class="w3-container w3-dark-grey w3-center w3-text-light-grey w3-padding-32" id="about">
@@ -332,18 +335,17 @@
                         I am ambitioned to develop a career to deliver user-centric and data-driven IT solutions to drive both business and sustainable values.
                     </p>
                 </div>
-
                 <div class="w3-third">
                     <h3>PROJECTS</h3>
                     <ul class="w3-ul">
                         <li class="w3-padding-16 w3-hover-black">
-                        <a href="https://drive.google.com/file/d/1OvH0bNr_uMGX709GDJr8JvddJl7oNxA5/view?usp=sharing">
+                        <a href="https://www.icloud.com/iclouddrive/0bbbHUAn61kQRr-ucR8ZLwYug#CS3342_Software_Design_Project_Report">
                             <img src="image/oops.png" class="w3-left w3-margin-right" style="width:50px">
                             <span>Software Design: Clinic Management System</span><br><br>
                         </a>
                         </li>
                         <li class="w3-padding-16 w3-hover-black">
-                        <a href="https://drive.google.com/file/d/1svPGS3gzh_BK7_6zJdpXdo8E16E12s9B/view?usp=sharing">
+                        <a href="https://www.icloud.com/iclouddrive/036sVGLh6R536U7fjRxLaQXEg#MS4224_An_Analysis_for_Banking_Campaign_and_Personal_Loan_Report">
                             <img src="image/analytics.png" class="w3-left w3-margin-right" style="width:50px">
                             <span>Data Mining: Virtual Banks’ Marketing
                                 Campaign and Personal Loan Management</span><br>
@@ -385,11 +387,38 @@
         function w3_open() {
             document.getElementById("mySidebar").style.display = "block";
             document.getElementById("myOverlay").style.display = "block";
+            document.querySelectorAll('[aria-controls="mySidebar"]').forEach(function (button) {
+                button.setAttribute("aria-expanded", "true");
+            });
+            document.querySelector(".w3-main").style.marginLeft =
+                window.matchMedia("(min-width: 993px)").matches ? "300px" : "0";
         }
 
         function w3_close() {
             document.getElementById("mySidebar").style.display = "none";
             document.getElementById("myOverlay").style.display = "none";
+            document.querySelectorAll('[aria-controls="mySidebar"]').forEach(function (button) {
+                button.setAttribute("aria-expanded", "false");
+            });
+            document.querySelector(".w3-main").style.marginLeft = "0";
+        }
+
+        function w3_toggle() {
+            const menuIsOpen = Array.from(
+                document.querySelectorAll('[aria-controls="mySidebar"]')
+            ).some(function (button) {
+                return button.getAttribute("aria-expanded") === "true";
+            });
+            if (menuIsOpen) {
+                w3_close();
+            } else {
+                w3_open();
+            }
+        }
+
+        if (window.matchMedia("(min-width: 993px)").matches) {
+            document.querySelector(".w3-hide-small.w3-hide-medium[aria-controls='mySidebar']")
+                .setAttribute("aria-expanded", "true");
         }
 
         // Modal Image Gallery
